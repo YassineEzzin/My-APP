@@ -1,10 +1,11 @@
 import {useState} from 'react'
 
-
+import { useWorkoutsContext } from '../Hooks/useWorkoutsContext'
 
 
 
 const WorkoutForm = ()=>{
+    const {dispatch}=useWorkoutsContext()
     const[problemeName,setProblemeName]=useState('')
     const[timeToSolve,setTimeToSolve]=useState('')
     const[pieceRechange,setPieceRechange]=useState('')
@@ -33,8 +34,16 @@ const WorkoutForm = ()=>{
         if(!response.ok){
             setError(json.error)
             console.log(error)
+           
             
           
+        }
+        if(response.ok){
+            setProblemeName('')
+            setTimeToSolve('')
+            setPieceRechange('')
+            dispatch({type: 'CREATE_WORKOUT',payload:json})
+
         }
         
        
